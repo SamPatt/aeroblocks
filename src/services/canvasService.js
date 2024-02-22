@@ -1,6 +1,10 @@
 async function createCanvas(name, code) {
+    const token = localStorage.getItem('authToken');
+    console.log('Token:', localStorage.getItem('authToken'));
+
+    
     try {
-      const response = await fetch('http://localhost:5000/canvases', { // Adjust URL as needed
+      const response = await fetch('http://localhost:5000/api/canvas/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
