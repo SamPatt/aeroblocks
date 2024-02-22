@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000'; // TODO - change this to the deployed API URL
+const API_URL = 'http://localhost:5000/api'; // TODO - change this to the deployed API URL
 
 async function login(email, password) {
   const response = await fetch(`${API_URL}/login`, {

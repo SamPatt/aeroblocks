@@ -1,28 +1,77 @@
 import React, { useState } from 'react';
+import { canvasService } from '../../services/canvasService';
 
-const CodeUploadForm = ({ onCodeSubmit }) => {
+const CodeUploadForm = ({ onSuccess }) => {
   const [code, setCode] = useState('');
+  const [name, setName] = useState('');
 
-  const handleSubmit = (event) => {
+  const helloWorldCode = `
+def get_name():
+  return input("What is your name? ")
+
+def greet(name):
+  return f"Hello, {name}!."
+
+def main():
+  name = get_name()
+  greeting = greet(name)
+  print(greeting)
+
+if __name__ == "__main__":
+  main()`;
+
+  const twoSumsCode = `
+def two_sum(nums, target):
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+
+# Example usage
+print(two_sum([2, 7, 11, 15], 9))`;
+
+const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitting code:', code);
-    onCodeSubmit(code);
-
-    setCode('');
+    try {
+      const data = await canvasService.createCanvas(name, code);
+      console.log('Canvas created successfully:', data);
+      setCode('');
+      setName('');
+      if (onSuccess) {
+        onSuccess(data); 
+      }
+    } catch (error) {
+      console.error('Failed to create canvas:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Upload Code</h2>
+      <h2>Create New Canvas</h2> 
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Canvas Name"
+          required
+        />
+      </label>
+      <br />
       <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Paste your code here"
-        rows="10"
+        rows="15"
         cols="50"
+        required
       />
       <br />
-      <button type="submit">Upload</button>
+      <button type="submit">Create</button>
+      <button type="button" onClick={() => { setCode(helloWorldCode); setName('Hello World'); }}>Hello World</button>
+      <button type="button" onClick={() => { setCode(twoSumsCode); setName('Two Sums'); }}>Two Sums</button>
     </form>
   );
 };
