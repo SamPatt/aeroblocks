@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { canvasService } from '../../services/canvasService';
+import { useCanvas } from '../../context/CanvasContext'; 
+import { useNavigate } from 'react-router-dom';
 
-const CodeUploadForm = ({ onSuccess }) => {
+const CodeUploadForm = () => {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
+  const { loadCanvas } = useCanvas();
+  const navigate = useNavigate();
 
   const helloWorldCode = `
 def get_name():
@@ -36,11 +40,10 @@ const handleSubmit = async (event) => {
     try {
       const data = await canvasService.createCanvas(name, code);
       console.log('Canvas created successfully:', data);
+      loadCanvas(data.canvas);
       setCode('');
       setName('');
-      if (onSuccess) {
-        onSuccess(data); 
-      }
+      navigate('/canvas');
     } catch (error) {
       console.error('Failed to create canvas:', error);
     }
