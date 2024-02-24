@@ -6,7 +6,7 @@
   .block-selection {
     flex: 1;
     min-width: 200px; 
-    max-width: 20%; 
+    max-width: 33%; 
     background-color: #212121; 
     color: white;
     overflow-y: auto;
@@ -14,7 +14,7 @@
   }
   
   .canvas-area {
-    flex: 4; 
+    flex: 3; 
     background-color: #212121;
     border-left: 1px solid #444;
     position: relative;

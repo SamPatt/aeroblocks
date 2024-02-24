@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const CanvasContext = createContext();
 
@@ -7,22 +7,35 @@ export const useCanvas = () => useContext(CanvasContext);
 export const CanvasProvider = ({ children }) => {
     const [canvasData, setCanvasData] = useState([]);
 
-    const updateBlockPosition = (itemId, x, y) => {
+    useEffect(() => {
+        console.log("Canvas Data updated:", canvasData);
+      }, [canvasData]);
+      
+
+      const updateBlockPosition = (itemId, x, y) => {
+        console.log('Updating block position:', itemId, x, y);
         setCanvasData(prevCanvasData => {
+          const updateBlocks = (blocks) => blocks.map(block => {
+            
+            if (block.id === itemId) {
+              return { ...block, position: { x, y } };
+            }
+            if (block.children) {
+              return { ...block, children: updateBlocks(block.children) };
+            }
+            return block;
+          });
+      
           return {
             ...prevCanvasData,
             data: {
               ...prevCanvasData.data,
-              blocks: prevCanvasData.data.blocks.map(block => {
-                if (block.id === itemId) {
-                  return { ...block, position: { x, y } };
-                }
-                return block;
-              }),
+              blocks: updateBlocks(prevCanvasData.data.blocks),
             },
           };
         });
       };
+      
       
       
 

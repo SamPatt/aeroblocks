@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// CanvasPage.jsx
+import React, { useEffect } from 'react';
 import { useCanvas } from '../context/CanvasContext';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -7,45 +8,16 @@ import CanvasArea from '../components/canvas/CanvasArea';
 import './CanvasPage.css';
 
 const CanvasPage = () => {
-  const { canvasData } = useCanvas();
-  const [blocks, setBlocks] = useState([]);
-
-  useEffect(() => {
-    
-    if (canvasData && canvasData.data && canvasData.data.blocks) {
-      setBlocks(canvasData.data.blocks);
-      console.log('Canvas data loaded:', canvasData.data.blocks);
-    }
-  }, [canvasData]); 
-
-  const handleDropBlock = (id, x, y) => {
-    setBlocks((prevBlocks) =>
-      prevBlocks.map((block) => {
-        if (block.id === id) {
-          return { ...block, position: { x, y } };
-        }
-        return block;
-      })
-    );
-  };
+  const { canvasData, updateBlockPosition } = useCanvas();
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="canvas-page-container">
-        {blocks.length === 0 ? (
-          <div>Loading...</div> 
-        ) : (
-          <>
-            <div className="block-selection">
-              <BlockSelection blocks={blocks} />
-            </div>
-            <CanvasArea
-              className="canvas-area"
-              blocks={blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
-              onDropBlock={handleDropBlock}
-            />
-          </>
-        )}
+        <BlockSelection blocks={canvasData.data.blocks.filter(block => !block.position || (block.position.x === null && block.position.y === null))} />
+        <CanvasArea
+          blocks={canvasData.data.blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
+          onDropBlock={updateBlockPosition}
+        />
       </div>
     </DndProvider>
   );
