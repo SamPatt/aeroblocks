@@ -36,8 +36,11 @@ const CanvasPage = () => {
           <div>Loading...</div> 
         ) : (
           <>
-            <BlockSelection blocks={blocks} />
+            <div className="block-selection">
+              <BlockSelection blocks={blocks} />
+            </div>
             <CanvasArea
+              className="canvas-area"
               blocks={blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
               onDropBlock={handleDropBlock}
             />
