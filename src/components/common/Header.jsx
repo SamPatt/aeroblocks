@@ -18,6 +18,11 @@ const Header = ({ onSaveCanvas, onLoadCanvas, onNewCanvas, showOptions }) => {
     setShowDropdown(false);
     onNewCanvas();
   };
+    const handleLogOut = () => {
+    setShowDropdown(false);
+    localStorage.removeItem('authToken');
+    window.location.reload();
+    }
   return (
     <div className="header">
       <h1>Aeroblocks</h1>
@@ -29,6 +34,7 @@ const Header = ({ onSaveCanvas, onLoadCanvas, onNewCanvas, showOptions }) => {
               <button onClick={handleSaveCanvas}>Save Canvas</button>
             <button onClick={handleLoadCanvas}>Load Canvas</button>
             <button onClick={handleNewCanvas}>New Canvas</button>
+            <button onClick={handleLogOut}>Log Out</button>
             </div>
           )}
         </div>

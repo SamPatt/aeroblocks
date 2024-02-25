@@ -8,13 +8,15 @@ const CanvasArea = ({ onDropBlock }) => {
     const [, drop] = useDrop(() => ({
         accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
         drop: (item, monitor) => {
-          const clientOffset = monitor.getClientOffset(); 
-          if (clientOffset) {
-            onDropBlock(item.id, clientOffset.x, clientOffset.y);
-            console.log( "canvasData:", canvasData)
-         
-          }
-        },
+            const clientOffset = monitor.getClientOffset();
+            if (clientOffset && drop.current) {
+              const dropRect = drop.current.getBoundingClientRect();
+              const x = clientOffset.x - dropRect.left;
+              const y = clientOffset.y - dropRect.top;
+              onDropBlock(item.id, x, y);
+            }
+          },
+          
       }));
 
   return <div ref={drop} className="canvas-area">

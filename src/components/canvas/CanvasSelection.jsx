@@ -10,7 +10,6 @@ const CanvasSelection = () => {
   const [canvases, setCanvases] = useState([]);
   const [isLoading, setIsLoading] = useState(true); 
   const { loadCanvas } = useCanvas();
-  const { canvasData } = useCanvas();
 
   useEffect(() => {
     const fetchCanvases = async () => {
