@@ -1,73 +1,41 @@
-  .block {
-      margin: 10px;
-      padding: 7px;
-      background-color: #1e1e1e;
-      color: white;
-      border-radius: 8px;
-      border: 3px solid #333;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-      cursor: grab;
-      text-align: start;
-      position: relative; /
+.block {
+    margin: 10px;
+    padding: 7px;
+    background-color: #1e1e1e;
+    color: white;
+    border-radius: 8px;
+    border: 3px solid #333;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: grab;
+    text-align: start;
+    display: flex; 
+    align-items: center;
   }
   
-  .block-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 5px;
+  .block-content {
+    display: flex;
+    gap: 10px;
   }
   
-  .block-type {
-      font-size: 0.7em;
-      opacity: 0.7;
+  .io-block {
+    background-color: #333;
+    border: 2px solid #666;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8em;
+    color: #ddd;
   }
   
-  .function {
-      background-color: #4E6EF2;
-      color: #FFF;
-      border: 3px solid #4059ad;
+  .input-block {
+    
   }
   
-  .variable {
-      background-color: #49BE25;
-      color: #FFF;
-      border: 3px solid #347d1a;
+  .output-block {
+    
   }
   
-  .loop {
-      background-color: #F2CB05;
-      color: #333; 
-      border: 3px solid #ad9e42;
-  }
-  
-  .conditional {
-      background-color: #F2495C;
-      color: #FFF;
-      border: 3px solid #ad3e4c;
-  }
-  
-  .child-container {
-      padding: 5px;
-      border-top: 2px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .child-block {
-      position: relative;
-      top: initial;
-      left: initial;
-      margin-top: 10px;
-      width: calc(100% - 14px); 
-      border: none; 
-      box-shadow: none; 
-  }
-  
-  .block.dragging {
-      opacity: 0.5;
-  }
-  
-  .block p {
-      margin: 0;
-      font-weight: bold;
+  .main-block {
+    
+    background-color: #555;
   }
   

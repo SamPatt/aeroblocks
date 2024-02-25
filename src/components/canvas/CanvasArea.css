@@ -15,6 +15,9 @@
     text-align: start;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
 }
 
 .block-header {
@@ -22,49 +25,4 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 5px;
-}
-
-.block-type {
-    font-size: 0.7em;
-    opacity: 0.7;
-}
-
-.function {
-    background-color: #4E6A7C;
-    color: #FFF;
-}
-
-.variable {
-    background-color: #A4AC86;
-    color: #333;
-}
-
-.loop {
-    background-color: #5C5F58;
-    color: #FFF;
-}
-
-.conditional {
-    background-color: #A97155;
-    color: #FFF;
-}
-
-
-
-
-.child-container {
-    padding: 5px;
-    border-top: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.child-block {
-    position: relative;
-    top: initial;
-    left: initial;
-    margin-top: 10px;
-    width: calc(100% - 14px);
-}
-
-.block.dragging {
-    opacity: 0.5;
 }

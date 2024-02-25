@@ -1,26 +1,35 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
-import './BlockSelection.css'; 
+import './BlockSelection.css';
 
-const RenderBlock = ({ block, isChild = false }) => {
+const RenderBlock = ({ block }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: block.type, 
-    item: { id: block.id || block.test }, 
+    type: block.type,
+    item: { id: block.id, type: block.type, name: block.name },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
+  const renderIOBlocks = (block) => {
+    return (
+      <>
+        {block.inputs?.map(input => (
+          <div key={input.id} className="io-block input-block">{input.name}</div>
+        ))}
+        <div className="main-block">{block.name}</div>
+        {block.outputs?.map(output => (
+          <div key={output.id} className="io-block output-block">{output.name}</div>
+        ))}
+      </>
+    );
+  };
+
   return (
-    <div 
-      ref={!isChild ? drag : null} 
-      className={`block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''} ${isChild ? 'child-block' : ''}`}
-    >
-      <div className="block-header">
-        {block.type === 'CONDITIONAL' ? block.test : block.id}
-        <span className="block-type">{block.type}</span>
+    <div ref={drag} className={`block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}>
+      <div className="block-content">
+        {renderIOBlocks(block)}
       </div>
-      {block.children && <div className="child-container">{block.children.map(child => <RenderBlock key={child.id || child.test} block={child} isChild={true} />)}</div>}
     </div>
   );
 };
@@ -30,7 +39,7 @@ const BlockSelection = ({ blocks }) => {
 
   return (
     <div className="block-selection">
-      {unplacedBlocks.map((block) => <RenderBlock key={block.id || block.test} block={block} />)}
+      {unplacedBlocks.map((block) => <RenderBlock key={block.id} block={block} />)}
     </div>
   );
 };

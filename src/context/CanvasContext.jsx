@@ -36,37 +36,21 @@ export const CanvasProvider = ({ children }) => {
     
     const updateBlockPosition = (itemId, newX, newY) => {
         console.log('Updating block position:', itemId, newX, newY);
+        if (isNaN(newX) || isNaN(newY)) {
+            console.error('Invalid position:', newX, newY);
+            return; 
+        }
+        
         setCanvasData(prevCanvasData => {
-            const updateBlocks = (blocks, deltaX = 0, deltaY = 0, updateChildren = false) => blocks.map(block => {
+            const updateBlocks = (blocks) => blocks.map(block => {
                 if (block.id === itemId) {
-                    const oldX = block.position?.x ?? null;
-                    const oldY = block.position?.y ?? null;
-                    deltaX = newX - oldX;
-                    deltaY = newY - oldY;
-                    return { ...block, position: { x: newX, y: newY } };
+                    return { ...block, position: { x: newX - 300, y: newY -80 } };
+                } else if (block.children) {
+                    return { ...block, children: updateBlocks(block.children) };
                 }
-
-                if (updateChildren && block.position?.x !== null && block.position?.y !== null) {
-                    return { 
-                        ...block, 
-                        position: { 
-                            x: block.position.x + deltaX, 
-                            y: block.position.y + deltaY 
-                        },
-                        children: block.children ? updateBlocks(block.children, deltaX, deltaY, true) : block.children,
-                    };
-                }
-
-                if (block.children) {
-                    return { 
-                        ...block, 
-                        children: updateBlocks(block.children, deltaX, deltaY, block.id === itemId || updateChildren)
-                    };
-                }
-
                 return block;
             });
-
+    
             return {
                 ...prevCanvasData,
                 data: {
@@ -76,6 +60,7 @@ export const CanvasProvider = ({ children }) => {
             };
         });
     };
+    
 
     const loadCanvas = (data) => {
         setCanvasData(data);

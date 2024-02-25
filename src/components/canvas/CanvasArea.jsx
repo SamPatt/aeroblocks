@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useDrop } from 'react-dnd';
+import React, { useCallback, useState } from 'react';
+import { useDrop, useDrag } from 'react-dnd';
 import { useCanvas } from '../../context/CanvasContext';
 import './CanvasArea.css';
 
 const EditableBlockContent = ({ block, onSave }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [value, setValue] = useState(block.type === 'CONDITIONAL' ? block.test : block.id);
+    const [value, setValue] = useState(block.name);
 
     const handleSave = () => {
         onSave(block.id, value);
@@ -30,50 +30,75 @@ const EditableBlockContent = ({ block, onSave }) => {
     );
 };
 
-const CanvasArea = ({ onDropBlock }) => {
-    const { canvasData, updateBlockContent } = useCanvas();
-
-    const renderBlocks = (blocks, isChild = false) => blocks.map(block => (
-        <div
-            key={block.id || block.test}
-            className={`canvasblock ${block.type.toLowerCase()} ${isChild ? 'child-block' : ''}`}
-            style={{
-                left: isChild ? 'initial' : `${block.position.x}px`,
-                top: isChild ? 'initial' : `${block.position.y}px`,
-                position: isChild ? 'relative' : 'absolute',
-            }}
-        >
-            <div className="block-header">
-                {['VARIABLE', 'CONDITIONAL'].includes(block.type) ? (
-                    <EditableBlockContent block={block} onSave={updateBlockContent} />
-                ) : (
-                    block.type === 'CONDITIONAL' ? block.test : block.id
-                )}
-                <span className="block-type">{block.type}</span>
-            </div>
-            {block.children && <div className="child-container">{renderBlocks(block.children, true)}</div>}
-        </div>
-    ));
-
-    const [, drop] = useDrop({
-        accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
-        drop: (item, monitor) => {
-            const delta = monitor.getDifferenceFromInitialOffset();
-            const initialPosition = monitor.getInitialClientOffset();
-            const canvasAreaRect = document.querySelector('.canvas-area').getBoundingClientRect();
-    
-            if (delta && initialPosition) {
-                let newX = initialPosition.x + delta.x - canvasAreaRect.left;
-                let newY = initialPosition.y + delta.y - canvasAreaRect.top;
-                onDropBlock(item.id, newX, newY);
+const CanvasBlock = ({ block, onMoveBlock }) => {
+    const [{ isDragging }, drag] = useDrag({
+        type: block.type,
+        item: { id: block.id, type: block.type, name: block.name },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+        end: (item, monitor) => {
+            const result = monitor.getDropResult();
+            if (result && item.id) {
+                onMoveBlock(item.id, result.x, result.y);
             }
         },
     });
-    
+
+    let label = block.name;
+    if (block.type === 'LOOP') {
+        label = `${block.loopType.toUpperCase()} over ${block.iterable}`;
+    } else if (block.type === 'CONDITIONAL') {
+        label = `IF ${block.condition}`;
+    }
+
+    return (
+        <div
+            ref={drag}
+            className={`canvasblock ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}
+            style={{
+                left: `${block.position.x}px`,
+                top: `${block.position.y}px`,
+            }}
+        >
+            <div className="block-header">
+                <div className="block-title">{label}</div>
+                <span className="block-type">{block.type}</span>
+            </div>
+        </div>
+    );
+};
+
+const CanvasArea = ({ onDropBlock }) => {
+    const { canvasData, updateBlockPosition } = useCanvas();
+
+    const moveBlock = useCallback((id, x, y) => {
+        updateBlockPosition(id, x, y);
+    }, [updateBlockPosition]);
+
+    const renderBlocks = (blocks) => blocks
+        .filter(block => block.position && block.position.x !== null && block.position.y !== null) // Only render blocks with a set position
+        .map((block) => (
+            <CanvasBlock key={block.id} block={block} onMoveBlock={moveBlock} />
+        ));
+
+        const [, drop] = useDrop({
+            accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
+            drop: (item, monitor) => {
+                const delta = monitor.getDifferenceFromInitialOffset();
+                const initialOffset = monitor.getInitialSourceClientOffset();
+        
+                if (delta && initialOffset) {
+                    const newX = Math.round(initialOffset.x + delta.x);
+                    const newY = Math.round(initialOffset.y + delta.y);
+                    onDropBlock(item.id, newX, newY);
+                }
+            },
+        });
 
     return (
         <div ref={drop} className="canvas-area">
-            {renderBlocks(canvasData.data.blocks.filter(block => block.position && block.position.x != null && block.position.y != null))}
+            {renderBlocks(canvasData.data.blocks)}
         </div>
     );
 };
