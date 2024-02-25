@@ -10,12 +10,12 @@ const HomePage = () => {
   const { handleLogin, handleRegister, error, email } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-        navigate('/canvas-selection');
-        }
-    }, [navigate]);
+//   useEffect(() => {
+//     const authToken = localStorage.getItem('authToken');
+//     if (authToken) {
+//         navigate('/canvas-selection');
+//         }
+//     }, [navigate]);
 
   return (
     <>

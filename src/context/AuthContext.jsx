@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }) => {
 
     const value = {
         error,
-        email,
         setError,
         handleLogin,
         handleRegister,

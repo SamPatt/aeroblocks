@@ -8,7 +8,7 @@ export const CanvasProvider = ({ children }) => {
     const [canvasData, setCanvasData] = useState({ data: { blocks: [] } });
 
     useEffect(() => {
-        console.log("Canvas Data updated:", canvasData);
+        console.log("Canvas Data updated:", JSON.stringify(canvasData));
       }, [canvasData]);
       
 
