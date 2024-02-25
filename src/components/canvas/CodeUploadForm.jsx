@@ -20,9 +20,7 @@ def main():
   name = get_name()
   greeting = greet(name)
   print(greeting)
-
-if __name__ == "__main__":
-  main()`;
+`;
 
   const twoSumsCode = `
 def two_sum(nums, target):

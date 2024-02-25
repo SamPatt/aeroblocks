@@ -2,26 +2,69 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #212121; 
-    overflow: auto; 
-    border: 1px solid #444; 
-  }
-  
-  .canvasblock {
-    position: absolute;
+    background-color: #212121;
+    overflow: auto;
+    border: 1px solid #444;
+}
+
+.canvasblock {
     margin: 10px;
     padding: 7px;
-    background-color: #1e1e1e;
-    color: white;
     border-radius: 8px;
-    cursor: move;
-    border: 3px solid #333;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     cursor: grab;
     text-align: start;
-  }
-  
-  .block.dragging {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.block-type {
+    font-size: 0.7em;
+    opacity: 0.7;
+}
+
+.function {
+    background-color: #4E6A7C;
+    color: #FFF;
+}
+
+.variable {
+    background-color: #A4AC86;
+    color: #333;
+}
+
+.loop {
+    background-color: #5C5F58;
+    color: #FFF;
+}
+
+.conditional {
+    background-color: #A97155;
+    color: #FFF;
+}
+
+
+
+
+.child-container {
+    padding: 5px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.child-block {
+    position: relative;
+    top: initial;
+    left: initial;
+    margin-top: 10px;
+    width: calc(100% - 14px);
+}
+
+.block.dragging {
     opacity: 0.5;
-  }
-  
+}
