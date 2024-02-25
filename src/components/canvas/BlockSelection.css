@@ -1,41 +1,64 @@
-.block {
-    margin: 10px;
-    padding: 7px;
-    background-color: #1e1e1e;
-    color: white;
+.block-selection {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: #2a2a2a; 
     border-radius: 8px;
-    border: 3px solid #333;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    gap: 15px;
+}
+
+.block {
+    padding: 10px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #3a3a3a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: grab;
     text-align: start;
-    display: flex; 
-    align-items: center;
-  }
-  
-  .block-content {
     display: flex;
+    align-items: center;
     gap: 10px;
-  }
-  
-  .io-block {
+    min-width: 200px; 
+}
+
+.block-content {
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+    justify-content: center;
+}
+
+.io-block {
     background-color: #333;
-    border: 2px solid #666;
+    border: 1px solid #555;
     border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 0.8em;
+    padding: 6px 12px;
+    font-size: 0.85em;
     color: #ddd;
-  }
-  
-  .input-block {
-    
-  }
-  
-  .output-block {
-    
-  }
-  
-  .main-block {
-    
-    background-color: #555;
-  }
-  
+}
+
+.input-block {
+    background-color: #4E5A65;
+}
+
+.output-block {
+    background-color: #5A4E65; 
+}
+
+.main-block {
+    padding: 8px 16px;
+    background-color: #424242; 
+    font-weight: bold; 
+    color: #E0E0E0; 
+}
+
+.block.dragging {
+    opacity: 0.5;
+    border-color: #5577ee; 
+}
+
+
+.block:hover {
+    border-color: #778899;
+}

@@ -52,6 +52,20 @@ const CanvasBlock = ({ block, onMoveBlock }) => {
         label = `IF ${block.condition}`;
     }
 
+    const renderIOBlocks = (block) => {
+        return (
+            <>
+                {block.inputs?.map(input => (
+                    <div key={input.id} className="io-block input-block">{input.name}</div>
+                ))}
+                <div className="main-block">{block.name}</div>
+                {block.outputs?.map(output => (
+                    <div key={output.id} className="io-block output-block">{output.name}</div>
+                ))}
+            </>
+        );
+    };
+
     return (
         <div
             ref={drag}
@@ -61,9 +75,8 @@ const CanvasBlock = ({ block, onMoveBlock }) => {
                 top: `${block.position.y}px`,
             }}
         >
-            <div className="block-header">
-                <div className="block-title">{label}</div>
-                <span className="block-type">{block.type}</span>
+            <div className="block-content">
+                {renderIOBlocks(block)}
             </div>
         </div>
     );
