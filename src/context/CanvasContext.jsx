@@ -46,33 +46,28 @@ export const CanvasProvider = ({ children }) => {
     
     const updateBlockPosition = (itemId, newX, newY) => {
         setCanvasData((prevCanvasData) => {
-            // Clone the grid and blocks array
             let newGrid = prevCanvasData.grid.map(row => [...row]);
             let newBlocks = [...prevCanvasData.blocks];
     
-            // Ensure newX and newY are within grid bounds
             if (newY >= maxRows || newX >= maxColumns || newY < 0 || newX < 0) {
                 console.log("New position is out of grid bounds.");
-                return prevCanvasData; // Exit if new position is out of bounds
+                return prevCanvasData; 
             }
-    
-            // Log the current target cell state for debugging
+
+
             console.log(`Target cell state before move: ${newGrid[newY][newX]}`);
     
-            // Check if the target grid cell is already occupied
             if (newGrid[newY][newX] !== null) {
                 console.log("Target position is already occupied.");
-                return prevCanvasData; // Exit without updating if the cell is occupied
+                return prevCanvasData;
             }
     
             const blockIndex = newBlocks.findIndex(block => block.id === itemId);
             if (blockIndex !== -1) {
                 const block = newBlocks[blockIndex];
-                // Clear the block's previous position if it was set
                 if (block.position.x != null && block.position.y != null) {
                     newGrid[block.position.y][block.position.x] = null;
                 }
-                // Set the block's new position
                 newGrid[newY][newX] = itemId;
                 newBlocks[blockIndex] = { ...block, position: { x: newX, y: newY } };
     
@@ -83,11 +78,7 @@ export const CanvasProvider = ({ children }) => {
     
             return { ...prevCanvasData, blocks: newBlocks, grid: newGrid };
         });
-    };
-    
-    
-    
-    
+    };   
 
     const loadCanvas = (data) => {
         console.log("Loading canvas data:", JSON.stringify(data.blocks));
@@ -111,35 +102,11 @@ export const CanvasProvider = ({ children }) => {
             grid: newGrid,
         });
     };
-    
-    
 
-    const addCanvasItem = (item) => {
-        setCanvasData(prevCanvasData => {
-            return { ...prevCanvasData, data: { ...prevCanvasData.data, blocks: [...prevCanvasData.blocks, item] } };
-        });
-    };
-
-    const removeCanvasItem = (itemId) => {
-        setCanvasData(prevCanvasData => {
-            const removeItem = (blocks) => blocks.filter(block => block.id !== itemId)
-                .map(block => block.children ? { ...block, children: removeItem(block.children) } : block);
-
-            return {
-                ...prevCanvasData,
-                data: {
-                    ...prevCanvasData.data,
-                    blocks: removeItem(prevCanvasData.blocks),
-                },
-            };
-        });
-    };
 
     const value = {
         canvasData,
         loadCanvas,
-        addCanvasItem,
-        removeCanvasItem,
         updateBlockPosition,
         updateBlockContent,
     };

@@ -9,29 +9,25 @@ const CodeUploadForm = () => {
   const { loadCanvas } = useCanvas();
   const navigate = useNavigate();
 
+
+
+
+  
   const helloWorldCode = `
-def get_name():
-  return input("What is your name? ")
-
-def greet(name):
-  return f"Hello, {name}!."
-
-def main():
-  name = get_name()
-  greeting = greet(name)
-  print(greeting)
+def hello():
+    print('Hello, World!')
 `;
 
   const twoSumsCode = `
-def two_sum(nums, target):
-    for i in range(len(nums)):
-        for j in range(i + 1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-    return []
-
-# Example usage
-print(two_sum([2, 7, 11, 15], 9))`;
+def two_sums(nums, target):
+  prev_map = {}  # to store visited numbers and their indices
+  
+  for i, num in enumerate(nums):
+      diff = target - num
+      if diff in prev_map:
+          return [prev_map[diff], i]
+      prev_map[num] = i
+  return []`;
 
 const handleSubmit = async (event) => {
     event.preventDefault();

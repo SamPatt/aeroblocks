@@ -6,7 +6,7 @@ import CanvasBlock from './CanvasBlock';
 const GridCell = ({ x, y }) => {
     const { canvasData, updateBlockPosition } = useCanvas();
     const [, drop] = useDrop({
-      accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
+      accept: ['FUNCTION', 'INPUT', 'OUTPUT', 'OPERATOR'],
       drop: (item) => updateBlockPosition(item.id, x, y),
     });
   
