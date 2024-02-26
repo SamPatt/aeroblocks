@@ -1,11 +1,16 @@
 .block-selection {
+    flex: 1; 
     display: flex;
-    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    background-color: #212121;
+    color: white;
+    overflow-y: auto;
+    margin-top: 10px;
     padding: 10px;
-    background-color: #2a2a2a; 
-    border-radius: 8px;
-    gap: 15px;
-}
+    max-height: 20%;
+    gap: 10px;
+  }
 
 .block {
     padding: 10px;
@@ -18,8 +23,10 @@
     text-align: start;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    min-width: 200px; 
+    min-width: 150px;
+    height: 50%;
 }
 
 .block-content {

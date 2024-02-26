@@ -1,4 +1,3 @@
-// CanvasPage.jsx
 import React, { useEffect } from 'react';
 import { useCanvas } from '../context/CanvasContext';
 import { DndProvider } from 'react-dnd';

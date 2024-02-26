@@ -44,7 +44,7 @@ export const CanvasProvider = ({ children }) => {
         setCanvasData(prevCanvasData => {
             const updateBlocks = (blocks) => blocks.map(block => {
                 if (block.id === itemId) {
-                    return { ...block, position: { x: newX - 300, y: newY -80 } };
+                    return { ...block, position: { x: newX, y: newY } };
                 } else if (block.children) {
                     return { ...block, children: updateBlocks(block.children) };
                 }
@@ -60,6 +60,7 @@ export const CanvasProvider = ({ children }) => {
             };
         });
     };
+    
     
 
     const loadCanvas = (data) => {

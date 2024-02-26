@@ -3,6 +3,11 @@ import { useDrop, useDrag } from 'react-dnd';
 import { useCanvas } from '../../context/CanvasContext';
 import './CanvasArea.css';
 
+const cellWidth = 100;
+const cellHeight = 100; 
+const maxRows = 6; 
+const maxColumns = 20;
+
 const EditableBlockContent = ({ block, onSave }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(block.name);
@@ -69,10 +74,10 @@ const CanvasBlock = ({ block, onMoveBlock }) => {
     return (
         <div
             ref={drag}
-            className={`canvasblock ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}
+            className={`canvas-block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}
             style={{
-                left: `${block.position.x}px`,
-                top: `${block.position.y}px`,
+                gridColumnStart: block.position.x + 1,
+                gridRowStart: block.position.y + 1,
             }}
         >
             <div className="block-content">
@@ -85,29 +90,25 @@ const CanvasBlock = ({ block, onMoveBlock }) => {
 const CanvasArea = ({ onDropBlock }) => {
     const { canvasData, updateBlockPosition } = useCanvas();
 
-    const moveBlock = useCallback((id, x, y) => {
-        updateBlockPosition(id, x, y);
-    }, [updateBlockPosition]);
+    const [, drop] = useDrop({
+        accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
+        drop: (item, monitor) => {
+            const clientOffset = monitor.getClientOffset();
+            if (clientOffset) {
+                const canvasRect = document.querySelector('.canvas-area').getBoundingClientRect();
+                const x = Math.floor((clientOffset.x - canvasRect.left) / cellWidth);
+                const y = Math.floor((clientOffset.y - canvasRect.top) / cellHeight);
+                onDropBlock(item.id, x, y);
+            }
+        },
+    });
+    
 
     const renderBlocks = (blocks) => blocks
-        .filter(block => block.position && block.position.x !== null && block.position.y !== null) // Only render blocks with a set position
+        .filter(block => block.position && block.position.x !== null && block.position.y !== null)
         .map((block) => (
-            <CanvasBlock key={block.id} block={block} onMoveBlock={moveBlock} />
+            <CanvasBlock key={block.id} block={block} onMoveBlock={updateBlockPosition} />
         ));
-
-        const [, drop] = useDrop({
-            accept: ['FUNCTION', 'VARIABLE', 'LOOP', 'CONDITIONAL'],
-            drop: (item, monitor) => {
-                const delta = monitor.getDifferenceFromInitialOffset();
-                const initialOffset = monitor.getInitialSourceClientOffset();
-        
-                if (delta && initialOffset) {
-                    const newX = Math.round(initialOffset.x + delta.x);
-                    const newY = Math.round(initialOffset.y + delta.y);
-                    onDropBlock(item.id, newX, newY);
-                }
-            },
-        });
 
     return (
         <div ref={drop} className="canvas-area">
@@ -115,5 +116,6 @@ const CanvasArea = ({ onDropBlock }) => {
         </div>
     );
 };
+
 
 export default CanvasArea;
