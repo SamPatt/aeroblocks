@@ -12,9 +12,9 @@ const CanvasPage = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="canvas-page-container">
-        <BlockSelection blocks={canvasData.data.blocks.filter(block => !block.position || (block.position.x === null && block.position.y === null))} />
+        <BlockSelection blocks={canvasData.blocks.filter(block => !block.position || (block.position.x === null && block.position.y === null))} />
         <CanvasArea
-          blocks={canvasData.data.blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
+          blocks={canvasData.blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
           onDropBlock={updateBlockPosition}
         />
       </div>

@@ -1,11 +1,21 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+const maxRows = 2;
+const maxColumns = 2;
+
+const initialGrid = {
+    blocks: [],
+    grid: Array.from({ length: maxRows }, () =>
+      Array.from({ length: maxColumns }, () => null)
+    ),
+  };
+
 const CanvasContext = createContext();
 
 export const useCanvas = () => useContext(CanvasContext);
 
 export const CanvasProvider = ({ children }) => {
-    const [canvasData, setCanvasData] = useState({ data: { blocks: [] } });
+    const [canvasData, setCanvasData] = useState(initialGrid);
 
     useEffect(() => {
         console.log("Canvas Data updated:", JSON.stringify(canvasData));
@@ -28,48 +38,47 @@ export const CanvasProvider = ({ children }) => {
                 ...prevCanvasData,
                 data: {
                     ...prevCanvasData.data,
-                    blocks: updateBlocks(prevCanvasData.data.blocks),
+                    blocks: updateBlocks(prevCanvasData.blocks),
                 },
             };
         });
     };
     
     const updateBlockPosition = (itemId, newX, newY) => {
-        console.log('Updating block position:', itemId, newX, newY);
-        if (isNaN(newX) || isNaN(newY)) {
-            console.error('Invalid position:', newX, newY);
-            return; 
-        }
-        
-        setCanvasData(prevCanvasData => {
-            const updateBlocks = (blocks) => blocks.map(block => {
-                if (block.id === itemId) {
-                    return { ...block, position: { x: newX, y: newY } };
-                } else if (block.children) {
-                    return { ...block, children: updateBlocks(block.children) };
-                }
-                return block;
-            });
+        setCanvasData((prevCanvasData) => {
+          let newGrid = prevCanvasData.grid.map(row => [...row]);
+          let newBlocks = [...prevCanvasData.blocks];
+      
+          const blockIndex = newBlocks.findIndex(block => block.id === itemId);
+          if (blockIndex !== -1) {
+            const block = newBlocks[blockIndex];
+            if (block.position.x !== null && block.position.y !== null) {
+              newGrid[block.position.y][block.position.x] = null;
+            }
+            newGrid[newY][newX] = itemId;
+            newBlocks[blockIndex] = { ...block, position: { x: newX, y: newY } };
+          }
+      
+          return { ...prevCanvasData, blocks: newBlocks, grid: newGrid };
+        });
+      };
     
+    
+
+      const loadCanvas = (data) => {
+        console.log("Loading canvas data:", JSON.stringify(data.blocks));
+        setCanvasData(prevCanvasData => {
             return {
                 ...prevCanvasData,
-                data: {
-                    ...prevCanvasData.data,
-                    blocks: updateBlocks(prevCanvasData.data.blocks),
-                },
+                blocks: data.data.blocks,
             };
         });
     };
     
-    
-
-    const loadCanvas = (data) => {
-        setCanvasData(data);
-    };
 
     const addCanvasItem = (item) => {
         setCanvasData(prevCanvasData => {
-            return { ...prevCanvasData, data: { ...prevCanvasData.data, blocks: [...prevCanvasData.data.blocks, item] } };
+            return { ...prevCanvasData, data: { ...prevCanvasData.data, blocks: [...prevCanvasData.blocks, item] } };
         });
     };
 
@@ -82,7 +91,7 @@ export const CanvasProvider = ({ children }) => {
                 ...prevCanvasData,
                 data: {
                     ...prevCanvasData.data,
-                    blocks: removeItem(prevCanvasData.data.blocks),
+                    blocks: removeItem(prevCanvasData.blocks),
                 },
             };
         });
