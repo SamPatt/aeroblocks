@@ -3,10 +3,10 @@ import { useDrag } from "react-dnd";
 import "./BlockSelection.css";
 
 const blockTypeColors = {
-  function: "orange",
-  input: "green",
-  output: "blue",
-  variable: "purple",
+  function: "#ff7f00",
+  input: "#2d572c",
+  output: "#0057b8",
+  variable: "#a349a4",
 };
 
 const RenderBlock = ({ block }) => {

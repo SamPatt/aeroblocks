@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import "./CanvasBlock.css";
 
 const blockTypeColors = {
-  function: "orange",
-  input: "green",
-  output: "blue",
-  variable: "purple",
+  function: "#ff7f00",
+  input: "#2d572c",
+  output: "#0057b8",
+  variable: "#a349a4",
 };
 
 const CanvasBlock = ({ block, onMoveBlock, grid }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(block.value);
   const [{ isDragging }, drag] = useDrag({
     type: block.type,
     item: { id: block.id, type: block.type, name: block.name },
@@ -28,6 +30,22 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
+  const toggleEdit = () => setIsEditing(!isEditing);
+
+  const handleEditChange = (e) => setEditValue(e.target.value);
+
+  const handleEditKeyPress = (e) => {
+    if (e.key === "Enter") {
+      block.value = editValue; 
+      setIsEditing(false);
+    }
+  };
+
+  const handleBlur = () => {
+    block.value = editValue; 
+    setIsEditing(false);
+  };
 
   const headerColor = blockTypeColors[block.type.toLowerCase()] || "grey";
 
@@ -97,7 +115,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
         className={`block-body ${connectionClasses[block.type.toLowerCase()]}`}
       >
         <div className="connectors">
-          {["output", "function", "input"].includes(
+          {["output", "function", "input", "variable"].includes(
             block.type.toLowerCase()
           ) && (
             <div
@@ -106,7 +124,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
               }`}
             ></div>
           )}
-          {["function", "input", "output"].includes(
+          {["function", "input", "output", "variable"].includes(
             block.type.toLowerCase()
           ) && (
             <div
@@ -115,7 +133,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
               }`}
             ></div>
           )}
-          {["function", "output", "input"].includes(
+          {["function", "output", "input", "variable"].includes(
             block.type.toLowerCase()
           ) && (
             <div
@@ -124,7 +142,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
               }`}
             ></div>
           )}
-          {["function", "input", "output"].includes(
+          {["function", "input", "output", "variable"].includes(
             block.type.toLowerCase()
           ) && (
             <div
@@ -134,13 +152,25 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
             ></div>
           )}
         </div>
-          {["variable", "output", "function", "input"].includes(block.type.toLowerCase()) && (
-            <div className="block-value">
-              {block.value !== null && block.value !== undefined
-                ? block.value.toString()
-                : " "}
-            </div>
+        {["variable", "output", "function", "input"].includes(block.type.toLowerCase()) && (
+        <div className="block-value">
+          {isEditing ? (
+            <input
+              type="text"
+              value={editValue}
+              onChange={handleEditChange}
+              onKeyPress={handleEditKeyPress}
+              onBlur={handleBlur}
+              autoFocus
+            />
+          ) : (
+            <>
+              {block.value !== null && block.value !== undefined ? block.value.toString() : " "}
+              <span onClick={toggleEdit} className="edit-icon">⚙</span>
+            </>
           )}
+        </div>
+      )}
       </div>
     </div>
   );

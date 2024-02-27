@@ -12,19 +12,17 @@
 }
 
 .function {
-    background-color: #ac693a; 
-
+    background-color: #ff7f00; /* Orange color for functions */
 }
 
 .input {
-    background-color: #4E5A65; /
+    background-color: #2d572c; /* Green color for inputs */
 }
 
 .output {
-    background-color: #5A4E65; 
+    background-color: #0057b8; /* Blue color for outputs */
 }
 
-.main-block {
-    background-color: #555; 
-
+.variable {
+    background-color: #a349a4; /* Purple color for variables */
 }

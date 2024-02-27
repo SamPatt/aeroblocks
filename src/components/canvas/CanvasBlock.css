@@ -5,7 +5,7 @@
     color: white;
     margin: 10px;
     cursor: grab;
-    height: 90%;
+    height: 80%;
     position: relative;
   }
   
@@ -20,6 +20,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
   }
   
   .block-name {
@@ -33,7 +34,7 @@
   
   .block-body {
     padding: 10px;
-    height: 70%;
+    height: 71%;
     background-color: #2a2a2a;
     position: relative;
     display: flex;
@@ -103,18 +104,18 @@
   border: 1px solid black;
   height: 2px; 
   background-color: white;
-  transform: translateY(-1120%);
+  transform: translateY(-990%);
   z-index: 2;
 }
 
 .canvas-block .connected-up::before {
     content: '';
     position: absolute;
-    top: -57px; 
+    top: -64px; 
     left: 50%;
     width: 2px;
     border: 1px solid black;
-    height: 72px; 
+    height: 77px; 
     background-color: white; 
     transform: translateX(-50%);
     z-index: 2;
@@ -153,4 +154,25 @@
     align-items: center;
     height: 100%;
     font-size: 1.5em;
+    overflow: hidden;
   }
+
+  .edit-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(90%);
+    cursor: pointer;
+    color: gray;
+  }
+  
+  .block-value input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px; 
+    color: black; 
+    background-color: white; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+  }
+  
