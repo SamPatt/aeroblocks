@@ -53,6 +53,7 @@ const BlockSelection = ({ blocks }) => {
 
   return (
     <div className="block-selection">
+      <h2>Toolbox</h2>
       {unplacedBlocks.map((block) => (
         <RenderBlock key={block.id} block={block} />
       ))}

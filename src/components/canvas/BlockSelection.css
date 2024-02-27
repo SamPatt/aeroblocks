@@ -3,15 +3,13 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    background-color: #212121;
+    background-image: linear-gradient(to right, #3d593f, #2f2f2f);
     color: white;
-    overflow-y: auto;
-    margin-top: 10px;
-    padding: 10px;
-    max-height: 33%;
-    min-height: 25%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    min-height: 150px;
     gap: 10px;
-    border: 2px solid #333;
+    padding: 10px;
   }
   .block-block {
     border: 1px solid #333;
@@ -21,9 +19,9 @@
     margin: 10px;
     overflow: hidden;
     cursor: grab;
-    height: 80%;
+    height: 130px;
     position: relative;
-    width: 200px;
+    width: 180px;
   }
 
 .block.dragging {

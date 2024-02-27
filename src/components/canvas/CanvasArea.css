@@ -1,28 +1,32 @@
 .canvas-area {
     display: grid;
-    flex: 4;
+    flex: 5;
     grid-template-columns: repeat(10, 200px);
     grid-template-rows: repeat(4, 160px);
-    background-color: #212121;
-    border: 2px solid #333;
+    background-color: #2f2f2f;
+    background-image: 
+        linear-gradient(to right, rgba(39, 203, 50, 0.077) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(39, 203, 50, 0.069) 1px, transparent 1px);
+    background-size: 20px 20px;
 }
+
 
 .block-content {
     display: flex;
 }
 
 .function {
-    background-color: #ff7f00; /* Orange color for functions */
+    background-color: #ff7f00; 
 }
 
 .input {
-    background-color: #2d572c; /* Green color for inputs */
+    background-color: #2d572c;
 }
 
 .output {
-    background-color: #0057b8; /* Blue color for outputs */
+    background-color: #0057b8;
 }
 
 .variable {
-    background-color: #a349a4; /* Purple color for variables */
+    background-color: #a349a4; 
 }
