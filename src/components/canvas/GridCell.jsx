@@ -6,7 +6,7 @@ import CanvasBlock from './CanvasBlock';
 const GridCell = ({ x, y }) => {
     const { canvasData, updateBlockPosition } = useCanvas();
     const [, drop] = useDrop({
-      accept: ['FUNCTION', 'INPUT', 'OUTPUT', 'OPERATOR'],
+      accept: ['FUNCTION', 'INPUT', 'OUTPUT', 'OPERATOR', 'VARIABLE', 'CONDITIONAL'],
       drop: (item) => updateBlockPosition(item.id, x, y),
     });
   
@@ -14,7 +14,7 @@ const GridCell = ({ x, y }) => {
     const block = canvasData.blocks.find((b) => b.id === blockId);
   
     return (
-      <div ref={drop} className="grid-cell" style={{ width: '200px', height: '100px' }}>
+      <div ref={drop} className="grid-cell" style={{ width: '200px', height: '160px' }}>
         {block && <CanvasBlock block={block} onMoveBlock={updateBlockPosition} grid={canvasData.grid} />}
       </div>
     );

@@ -6,6 +6,7 @@ const blockTypeColors = {
   function: "orange",
   input: "green",
   output: "blue",
+  variable: "purple",
 };
 
 const CanvasBlock = ({ block, onMoveBlock, grid }) => {
@@ -64,9 +65,17 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     } ${isConnected(block.position, "up") ? "connected-up" : ""} ${
       isConnected(block.position, "down") ? "connected-down" : ""
     }`,
+    variable: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
+      isConnected(block.position, "right") ? "connected-right" : ""
+    } ${isConnected(block.position, "up") ? "connected-up" : ""} ${
+      isConnected(block.position, "down") ? "connected-down" : ""
+    }`,
   };
 
-  const gridRowEnd = block.type.toLowerCase() === 'function' ? block.position.y + 3 : block.position.y + 2;
+  const gridRowEnd =
+    block.type.toLowerCase() === "function"
+      ? block.position.y + 3
+      : block.position.y + 2;
 
   return (
     <div
@@ -88,28 +97,36 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
         className={`block-body ${connectionClasses[block.type.toLowerCase()]}`}
       >
         <div className="connectors">
-          {["output", "function", "input"].includes(block.type.toLowerCase()) && (
+          {["output", "function", "input"].includes(
+            block.type.toLowerCase()
+          ) && (
             <div
               className={`input-connector ${
                 isConnected(block.position, "left") ? "connected" : ""
               }`}
             ></div>
           )}
-          {["function", "input", "output"].includes(block.type.toLowerCase()) && (
+          {["function", "input", "output"].includes(
+            block.type.toLowerCase()
+          ) && (
             <div
               className={`output-connector ${
                 isConnected(block.position, "right") ? "connected" : ""
               }`}
             ></div>
           )}
-          {["function", "output", "input"].includes(block.type.toLowerCase()) && (
+          {["function", "output", "input"].includes(
+            block.type.toLowerCase()
+          ) && (
             <div
               className={`up-connector ${
                 isConnected(block.position, "up") ? "connected" : ""
               }`}
             ></div>
           )}
-          {["function", "input", "output"].includes(block.type.toLowerCase()) && (
+          {["function", "input", "output"].includes(
+            block.type.toLowerCase()
+          ) && (
             <div
               className={`down-connector ${
                 isConnected(block.position, "down") ? "connected" : ""
@@ -117,6 +134,13 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
             ></div>
           )}
         </div>
+          {["variable", "output", "function", "input"].includes(block.type.toLowerCase()) && (
+            <div className="block-value">
+              {block.value !== null && block.value !== undefined
+                ? block.value.toString()
+                : " "}
+            </div>
+          )}
       </div>
     </div>
   );
