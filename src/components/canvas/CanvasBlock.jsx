@@ -51,14 +51,22 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
   const connectionClasses = {
     input: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
       isConnected(block.position, "right") ? "connected-right" : ""
+    } ${isConnected(block.position, "up") ? "connected-up" : ""} ${
+      isConnected(block.position, "down") ? "connected-down" : ""
     }`,
     function: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
       isConnected(block.position, "right") ? "connected-right" : ""
+    } ${isConnected(block.position, "up") ? "connected-up" : ""} ${
+      isConnected(block.position, "down") ? "connected-down" : ""
     }`,
     output: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
       isConnected(block.position, "right") ? "connected-right" : ""
+    } ${isConnected(block.position, "up") ? "connected-up" : ""} ${
+      isConnected(block.position, "down") ? "connected-down" : ""
     }`,
   };
+
+  const gridRowEnd = block.type.toLowerCase() === 'function' ? block.position.y + 3 : block.position.y + 2;
 
   return (
     <div
@@ -69,6 +77,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
       style={{
         gridColumnStart: block.position.x + 1,
         gridRowStart: block.position.y + 1,
+        gridRowEnd: gridRowEnd,
       }}
     >
       <div className="block-header" style={{ backgroundColor: headerColor }}>
@@ -90,6 +99,20 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
             <div
               className={`output-connector ${
                 isConnected(block.position, "right") ? "connected" : ""
+              }`}
+            ></div>
+          )}
+          {["function", "output", "input"].includes(block.type.toLowerCase()) && (
+            <div
+              className={`up-connector ${
+                isConnected(block.position, "up") ? "connected" : ""
+              }`}
+            ></div>
+          )}
+          {["function", "input", "output"].includes(block.type.toLowerCase()) && (
+            <div
+              className={`down-connector ${
+                isConnected(block.position, "down") ? "connected" : ""
               }`}
             ></div>
           )}
