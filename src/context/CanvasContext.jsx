@@ -21,28 +21,22 @@ export const CanvasProvider = ({ children }) => {
         console.log("Canvas Data updated:", JSON.stringify(canvasData));
     }, [canvasData]);
 
-    const updateBlockContent = (blockId, newContent) => {
+    const updateBlockContent = (blockId, newValue) => {
         setCanvasData(prevCanvasData => {
-            const updateBlocks = (blocks) => blocks.map(block => {
-                if (block.id === blockId && block.type === 'VARIABLE') {
-                    return { ...block, id: newContent };
-                } else if (block.id === blockId && block.type === 'CONDITIONAL') {
-                    return { ...block, test: newContent };
-                } else if (block.children) {
-                    return { ...block, children: updateBlocks(block.children) };
+            
+            const updatedBlocks = prevCanvasData.blocks.map(block => {
+                if (block.id === blockId) {
+                    return { ...block, value: newValue };
                 }
                 return block;
             });
-
             return {
                 ...prevCanvasData,
-                data: {
-                    ...prevCanvasData.data,
-                    blocks: updateBlocks(prevCanvasData.blocks),
-                },
+                blocks: updatedBlocks,
             };
         });
     };
+    
     
     const updateBlockPosition = (itemId, newX, newY) => {
         setCanvasData((prevCanvasData) => {

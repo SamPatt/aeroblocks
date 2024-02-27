@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDrag } from "react-dnd";
+import { useCanvas } from "../../context/CanvasContext";
 import "./CanvasBlock.css";
 
 const blockTypeColors = {
@@ -10,6 +11,7 @@ const blockTypeColors = {
 };
 
 const CanvasBlock = ({ block, onMoveBlock, grid }) => {
+  const { updateBlockContent } = useCanvas();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(block.value);
   const [{ isDragging }, drag] = useDrag({
@@ -37,15 +39,16 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
 
   const handleEditKeyPress = (e) => {
     if (e.key === "Enter") {
-      block.value = editValue; 
+      updateBlockContent(block.id, editValue);
       setIsEditing(false);
     }
   };
-
+  
   const handleBlur = () => {
-    block.value = editValue; 
+    updateBlockContent(block.id, editValue);
     setIsEditing(false);
   };
+  
 
   const headerColor = blockTypeColors[block.type.toLowerCase()] || "grey";
 
