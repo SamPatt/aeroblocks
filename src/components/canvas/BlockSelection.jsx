@@ -2,6 +2,12 @@ import React from 'react';
 import { useDrag } from 'react-dnd';
 import './BlockSelection.css';
 
+const blockTypeColors = {
+  function: 'orange',
+  input: 'green',
+  output: 'blue',
+};
+
 const RenderBlock = ({ block }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: block.type,
@@ -11,13 +17,29 @@ const RenderBlock = ({ block }) => {
     }),
   }));
 
-  return (
-    <div ref={drag} className={`main-block ${isDragging ? 'dragging' : ''}`}>
-      <div className={block.type.toLowerCase()}>{block.name}</div>
-  </div>
+  const headerColor = blockTypeColors[block.type.toLowerCase()] || 'grey';
 
+  return (
+    <div
+      ref={drag}
+      className={`block-block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}
+    >
+      <div className="block-header" style={{ backgroundColor: headerColor }}>
+        <span className="block-name">{block.name}</span>
+        <span className="block-type">{block.type}</span>
+      </div>
+      <div className="block-body">
+        
+      </div>
+    </div>
   );
 
+
+
+
+
+
+  
   
 };
 

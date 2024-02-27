@@ -1,11 +1,11 @@
-import React from 'react';
-import { useDrag } from 'react-dnd';
-import './CanvasBlock.css';
+import React from "react";
+import { useDrag } from "react-dnd";
+import "./CanvasBlock.css";
 
 const blockTypeColors = {
-  function: 'orange',
-  input: 'green',
-  output: 'blue',
+  function: "orange",
+  input: "green",
+  output: "blue",
 };
 
 const CanvasBlock = ({ block, onMoveBlock, grid }) => {
@@ -14,7 +14,12 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     item: { id: block.id, type: block.type, name: block.name },
     end: (item, monitor) => {
       const result = monitor.getDropResult();
-      if (result && item.id && result.x !== undefined && result.y !== undefined) {
+      if (
+        result &&
+        item.id &&
+        result.x !== undefined &&
+        result.y !== undefined
+      ) {
         onMoveBlock(item.id, result.x, result.y);
       }
     },
@@ -23,20 +28,20 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     }),
   });
 
-  const headerColor = blockTypeColors[block.type.toLowerCase()] || 'grey';
+  const headerColor = blockTypeColors[block.type.toLowerCase()] || "grey";
 
   const isConnected = (position, direction) => {
     const x = position.x;
     const y = position.y;
 
     switch (direction) {
-      case 'left':
+      case "left":
         return grid[y] && grid[y][x - 1] != null;
-      case 'right':
+      case "right":
         return grid[y] && grid[y][x + 1] != null;
-      case 'up':
+      case "up":
         return grid[y - 1] && grid[y - 1][x] != null;
-      case 'down':
+      case "down":
         return grid[y + 1] && grid[y + 1][x] != null;
       default:
         return false;
@@ -44,17 +49,23 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
   };
 
   const connectionClasses = {
-    input: isConnected(block.position, 'right') ? 'connected-right' : '',
-    function: `${isConnected(block.position, 'left') ? 'connected-left' : ''} ${
-      isConnected(block.position, 'right') ? 'connected-right' : ''
+    input: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
+      isConnected(block.position, "right") ? "connected-right" : ""
     }`,
-    output: isConnected(block.position, 'left') ? 'connected-left' : '',
+    function: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
+      isConnected(block.position, "right") ? "connected-right" : ""
+    }`,
+    output: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
+      isConnected(block.position, "right") ? "connected-right" : ""
+    }`,
   };
 
   return (
     <div
       ref={drag}
-      className={`canvas-block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}
+      className={`canvas-block ${block.type.toLowerCase()} ${
+        isDragging ? "dragging" : ""
+      }`}
       style={{
         gridColumnStart: block.position.x + 1,
         gridRowStart: block.position.y + 1,
@@ -64,13 +75,23 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
         <span className="block-name">{block.name}</span>
         <span className="block-type">{block.type}</span>
       </div>
-      <div className={`block-body ${connectionClasses[block.type.toLowerCase()]}`}>
+      <div
+        className={`block-body ${connectionClasses[block.type.toLowerCase()]}`}
+      >
         <div className="connectors">
-          {['input', 'function'].includes(block.type.toLowerCase()) && (
-            <div className={`input-connector ${connectionClasses[block.type.toLowerCase()].includes('connected-left') ? 'connected' : ''}`}></div>
+          {["output", "function", "input"].includes(block.type.toLowerCase()) && (
+            <div
+              className={`input-connector ${
+                isConnected(block.position, "left") ? "connected" : ""
+              }`}
+            ></div>
           )}
-          {['function', 'output'].includes(block.type.toLowerCase()) && (
-            <div className={`output-connector ${connectionClasses[block.type.toLowerCase()].includes('connected-right') ? 'connected' : ''}`}></div>
+          {["function", "input", "output"].includes(block.type.toLowerCase()) && (
+            <div
+              className={`output-connector ${
+                isConnected(block.position, "right") ? "connected" : ""
+              }`}
+            ></div>
           )}
         </div>
       </div>

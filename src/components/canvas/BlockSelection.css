@@ -11,6 +11,19 @@
     max-height: 33%;
     min-height: 25%;
     gap: 10px;
+    border: 2px solid #333;
+  }
+  .block-block {
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    color: white;
+    margin: 10px;
+    overflow: hidden;
+    cursor: grab;
+    height: 80%;
+    position: relative;
+    width: 200px;
   }
 
 .block.dragging {
