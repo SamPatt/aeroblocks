@@ -11,27 +11,14 @@ const RenderBlock = ({ block }) => {
     }),
   }));
 
-  const renderIOBlocks = (block) => {
-    return (
-      <>
-        {block.inputs?.map(input => (
-          <div key={input.id} className="io-block input-block">{input.name}</div>
-        ))}
-        <div className="main-block">{block.name}</div>
-        {block.outputs?.map(output => (
-          <div key={output.id} className="io-block output-block">{output.name}</div>
-        ))}
-      </>
-    );
-  };
-
   return (
-    <div ref={drag} className={`block ${block.type.toLowerCase()} ${isDragging ? 'dragging' : ''}`}>
-      <div className="block-content">
-        {renderIOBlocks(block)}
-      </div>
-    </div>
+    <div ref={drag} className={`main-block ${isDragging ? 'dragging' : ''}`}>
+      <div className={block.type.toLowerCase()}>{block.name}</div>
+  </div>
+
   );
+
+  
 };
 
 const BlockSelection = ({ blocks }) => {
@@ -45,3 +32,4 @@ const BlockSelection = ({ blocks }) => {
 };
 
 export default BlockSelection;
+

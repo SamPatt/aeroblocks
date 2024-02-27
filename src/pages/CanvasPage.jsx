@@ -16,6 +16,7 @@ const CanvasPage = () => {
         <CanvasArea
           blocks={canvasData.blocks.filter(block => block.position && block.position.x != null && block.position.y != null)}
           onDropBlock={updateBlockPosition}
+          grid={canvasData.grid}
         />
       </div>
     </DndProvider>

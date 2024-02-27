@@ -3,50 +3,23 @@
     flex: 4;
     grid-template-columns: repeat(10, 200px);
     grid-template-rows: repeat(4, 100px);
-    gap: 10px;
     background-color: #212121;
-}
-.grid-cell {
-    border: 1px solid #444;
-    background-color: #212121;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.canvas-block {
-    color: white;
-    border-radius: 8px;
-    border: 2px solid #3a3a3a;
-    text-align: start;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center; 
-    z-index: 1;
-    margin-top: 3px;
 }
 
 .block-content {
     display: flex;
-    gap: 10px; 
 }
 
-.io-block {
-    background-color: #333; 
-    border: 2px solid #666; 
-    border-radius: 4px; 
-    padding: 4px 8px;
-    font-size: 0.8em;
-    color: #ddd; 
+.function {
+    background-color: #ac693a; 
+
 }
 
-.input-block {
+.input {
     background-color: #4E5A65; /
 }
 
-.output-block {
+.output {
     background-color: #5A4E65; 
 }
 

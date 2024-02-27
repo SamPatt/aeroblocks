@@ -14,11 +14,10 @@ const GridCell = ({ x, y }) => {
     const block = canvasData.blocks.find((b) => b.id === blockId);
   
     return (
-      <div ref={drop} className="grid-cell" style={{ width: '200px', height: '100px', border: '1px solid black' }}>
-        {block && <CanvasBlock block={block} onMoveBlock={updateBlockPosition} />}
+      <div ref={drop} className="grid-cell" style={{ width: '200px', height: '100px' }}>
+        {block && <CanvasBlock block={block} onMoveBlock={updateBlockPosition} grid={canvasData.grid} />}
       </div>
     );
   };
   
   export default GridCell;
-  

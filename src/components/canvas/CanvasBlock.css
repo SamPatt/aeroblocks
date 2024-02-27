@@ -1,0 +1,108 @@
+.canvas-block {
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #1a1a1a;
+    color: white;
+    margin: 10px;
+    overflow: hidden;
+    cursor: grab;
+    height: 80%;
+    position: relative;
+  }
+  
+  .block-header {
+    padding: 5px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .block-name {
+    font-weight: bold;
+  }
+  
+  .block-type {
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+  
+  .block-body {
+    padding: 10px;
+    height: 100%;
+    background-color: #2a2a2a;
+    position: relative;
+  }
+  
+  .connectors {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .input-connector, .output-connector {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #666;
+  }
+  
+  .function-connectors .input-connector {
+    background-color: green;
+  }
+  
+  .function-connectors .output-connector {
+    background-color: red;
+  }
+  
+  .input-connectors .output-connector {
+    display: flex;
+    background-color: red;
+  }
+
+  .input-connectors .input-connector {
+    display: flex;
+    background-color: #2a2a2a;
+  }
+  
+  .output-connectors .input-connector {
+    background-color: green;
+  }
+
+  .output-connectors .output-connector {
+    background-color: red;
+  }
+  
+  .dragging {
+    opacity: 0.5;
+  }
+  
+  .input-connector.connected,
+.output-connector.connected {
+  background-color: #7a2b2b; 
+}
+
+
+.canvas-block .connected-left::before {
+  content: '';
+  position: absolute;
+  left: -10px; 
+  top: 50%;
+  width: 10px;
+  height: 2px; 
+  background-color: white; 
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+
+.canvas-block .connected-right::after {
+  content: '';
+  position: absolute;
+  right: -10px; 
+  top: 50%;
+  width: 10px; 
+  height: 2px; 
+  background-color: white;
+  transform: translateY(-50%);
+  z-index: 2;
+}
