@@ -56,7 +56,6 @@ const handleSubmit = async (event) => {
           required
         />
       </label>
-      <br />
       <textarea
         value={code}
         onChange={(e) => setCode(e.target.value)}
@@ -66,9 +65,9 @@ const handleSubmit = async (event) => {
         required
       />
       <br />
-      <button type="submit">Create</button>
       <button type="button" onClick={() => { setCode(helloWorldCode); setName('Hello World'); }}>Hello World</button>
       <button type="button" onClick={() => { setCode(twoSumsCode); setName('Two Sums'); }}>Two Sums</button>
+      <button type="submit">Create</button>
     </form>
   );
 };

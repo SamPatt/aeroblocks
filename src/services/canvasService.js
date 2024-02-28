@@ -42,7 +42,33 @@ async function loadCanvases() {
   }
 }
 
+async function saveCanvas(name, data) {
+  const token = localStorage.getItem("authToken");
+
+  try {
+      const response = await fetch("http://localhost:5000/api/canvas/save", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name, data }),
+      });
+
+      if (!response.ok) {
+          throw new Error("Failed to save canvas");
+      }
+
+      const savedCanvas = await response.json();
+      return savedCanvas;
+  } catch (error) {
+      console.error("Error saving canvas:", error);
+      throw error;
+  }
+}
+
 export const canvasService = {
   createCanvas,
   loadCanvases,
+  saveCanvas,
 };

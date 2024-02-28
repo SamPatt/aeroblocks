@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { canvasService } from '../services/canvasService';
 
 const maxRows = 4;
 const maxColumns = 10;
@@ -74,6 +75,15 @@ export const CanvasProvider = ({ children }) => {
         });
     };   
 
+    const saveCanvas = async (name, data) => {
+        try {
+            const savedData = await canvasService.saveCanvas(name, data);
+            console.log("Canvas saved successfully", savedData);
+        } catch (error) {
+            console.error("Failed to save canvas", error);
+        }
+    };
+
     const loadCanvas = (data) => {
         console.log("Loading canvas data:", JSON.stringify(data.blocks));
     
@@ -94,6 +104,7 @@ export const CanvasProvider = ({ children }) => {
         setCanvasData({
             blocks: loadedBlocks,
             grid: newGrid,
+            name: data.name,
         });
     };
 
@@ -103,6 +114,7 @@ export const CanvasProvider = ({ children }) => {
         loadCanvas,
         updateBlockPosition,
         updateBlockContent,
+        saveCanvas,
     };
 
     return <CanvasContext.Provider value={value}>{children}</CanvasContext.Provider>;
