@@ -28,6 +28,19 @@ def two_sums(nums, target):
       prev_map[num] = i
   return []`;
 
+const flightExampleCode = `
+current_altitude = 1000  # Altitude in feet
+current_speed = 50  # Speed in km/h
+
+def adjust_altitude(desired_altitude):
+    print("Adjust altitude")
+
+def set_speed(desired_speed):
+    print("Set speed")
+    `;
+
+
+
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -66,6 +79,7 @@ const handleSubmit = async (event) => {
           required
         />
         <br />
+        <button type="button" onClick={() => { setCode(flightExampleCode); setName('Flight Example'); }}>Flight Example</button>
         <button type="button" onClick={() => { setCode(helloWorldCode); setName('Hello World'); }}>Hello World</button>
         <button type="button" onClick={() => { setCode(twoSumsCode); setName('Two Sums'); }}>Two Sums</button>
         <button type="submit">Create</button>
