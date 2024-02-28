@@ -8,7 +8,6 @@ const maxRows = 4;
 const maxColumns = 10;
 
 const CanvasArea = () => {
-  const { canvasData, updateBlockPosition } = useCanvas();
   const rows = Array.from({ length: maxRows }, (_, i) => i);
   const columns = Array.from({ length: maxColumns }, (_, i) => i);
 
