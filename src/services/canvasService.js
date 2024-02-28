@@ -2,7 +2,7 @@ async function createCanvas(name, code) {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch("http://localhost:5000/api/canvas/create", {
+    const response = await fetch("https://aeroblocks-a4441b40d026.herokuapp.com/api/canvas/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ async function loadCanvases() {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch("http://localhost:5000/api/canvas/load", {
+    const response = await fetch("https://aeroblocks-a4441b40d026.herokuapp.com/api/canvas/load", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ async function saveCanvas(name, data) {
   const token = localStorage.getItem("authToken");
 
   try {
-      const response = await fetch("http://localhost:5000/api/canvas/save", {
+      const response = await fetch("https://aeroblocks-a4441b40d026.herokuapp.com/api/canvas/save", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",

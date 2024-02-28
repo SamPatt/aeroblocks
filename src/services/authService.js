@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api'; // TODO - change this to the deployed API URL
+const API_URL = 'https://aeroblocks-a4441b40d026.herokuapp.com/api'; 
 
 async function login(email, password) {
   const response = await fetch(`${API_URL}/login`, {
