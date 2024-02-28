@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css';
 import orbImage from '../../assets/orb.png';
 import { useNavigate } from 'react-router-dom';
 import { useCanvas } from '../../context/CanvasContext';
 import Modal from './Modal'; // Assuming you have a Modal component
 
-const Header = ({ onLoadCanvas, onNewCanvas, showOptions }) => {
+const Header = ({ showOptions }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [canvasName, setCanvasName] = useState('');
-  const { canvasData, saveCanvas } = useCanvas();
+  const { canvasData, setCanvasData, saveCanvas } = useCanvas();
   const navigate = useNavigate();
 
   const handleDropdown = () => setShowDropdown(!showDropdown);
+
+  useEffect(() => {
+    setCanvasName(canvasData.name);
+  }, [canvasData.name]);
 
   const promptSave = (callback) => {
     const confirmSave = window.confirm('Do you want to save the current canvas before proceeding?');
@@ -22,6 +26,15 @@ const Header = ({ onLoadCanvas, onNewCanvas, showOptions }) => {
       callback();
     }
   };
+  const onLoadCanvas = () => {
+    setCanvasData({});
+    navigate('/canvas-selection');
+  }
+
+  const onNewCanvas = () => {
+    setCanvasData({});
+    navigate('/code-upload');
+  }
 
   const handleSave = (name) => {
     saveCanvas(name, canvasData);
@@ -71,14 +84,14 @@ const Header = ({ onLoadCanvas, onNewCanvas, showOptions }) => {
       </div>
       {showSaveModal && (
         <Modal onClose={() => setShowSaveModal(false)} title="Save Canvas">
-          <input
-            type="text"
-            placeholder="Enter canvas name"
-            value={canvasName}
-            onChange={(e) => setCanvasName(e.target.value)}
-          />
-          <button onClick={() => handleSave(canvasName)}>Save</button>
-        </Modal>
+        <input
+          type="text"
+          placeholder="Enter canvas name"
+          value={canvasName}
+          onChange={(e) => setCanvasName(e.target.value)}
+        />
+        <button onClick={() => handleSave(canvasName)}>Save</button>
+      </Modal>
       )}
     </>
   );

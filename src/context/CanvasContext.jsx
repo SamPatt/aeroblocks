@@ -87,30 +87,40 @@ export const CanvasProvider = ({ children }) => {
     const loadCanvas = (data) => {
         console.log("Loading canvas data:", JSON.stringify(data.blocks));
     
-        const newGrid = Array.from({ length: maxRows }, () =>
-            Array.from({ length: maxColumns }, () => null)
-        );
-
-        const loadedBlocks = data.data.blocks; 
+        let gridExists = data.grid && Array.isArray(data.grid) && data.grid.length > 0;
+        let newGrid;
     
-        loadedBlocks.forEach(block => {
-            if (block.position && block.position.x != null && block.position.y != null) {
-                if (block.position.y < maxRows && block.position.x < maxColumns) {
-                    newGrid[block.position.y][block.position.x] = block.id;
+        if (gridExists) {
+            newGrid = data.grid; 
+        } else {
+            
+            newGrid = Array.from({ length: maxRows }, () =>
+                Array.from({ length: maxColumns }, () => null)
+            );
+    
+            const loadedBlocks = data.data.blocks;
+    
+            loadedBlocks.forEach(block => {
+                if (block.position && block.position.x != null && block.position.y != null) {
+                    if (block.position.y < maxRows && block.position.x < maxColumns) {
+                        newGrid[block.position.y][block.position.x] = block.id;
+                    }
                 }
-            }
-        });
+            });
+        }
     
         setCanvasData({
-            blocks: loadedBlocks,
+            blocks: data.data.blocks,
             grid: newGrid,
             name: data.name,
         });
     };
+    
 
 
     const value = {
         canvasData,
+        setCanvasData,
         loadCanvas,
         updateBlockPosition,
         updateBlockContent,
