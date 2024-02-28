@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 
+// Manages user auth
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);

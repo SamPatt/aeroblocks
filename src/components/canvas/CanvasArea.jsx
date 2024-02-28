@@ -1,8 +1,8 @@
-import React, { useCallback, useState, useRef } from "react";
-import { useDrop, useDrag } from "react-dnd";
-import { useCanvas } from "../../context/CanvasContext";
+import React from "react";
 import GridCell from "./GridCell";
 import "./CanvasArea.css";
+
+// Creates the canvas area with grid cells
 
 const maxRows = 4;
 const maxColumns = 10;

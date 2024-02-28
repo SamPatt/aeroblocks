@@ -5,6 +5,8 @@ import './CanvasSelection.css';
 import LoadingSpinner from './LoadingSpinner';
 import { useCanvas } from '../../context/CanvasContext';
 
+// Displays a list of canvases and allows the user to select one to load
+
 const CanvasSelection = () => {
   const navigate = useNavigate();
   const [canvases, setCanvases] = useState([]);
@@ -15,7 +17,6 @@ const CanvasSelection = () => {
     const fetchCanvases = async () => {
       try {
         const loadedCanvases = await canvasService.loadCanvases();
-        console.log('Loaded canvases:', loadedCanvases);
         setIsLoading(false); 
         if (loadedCanvases.length === 0) {
           navigate('/code-upload');

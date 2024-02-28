@@ -42,6 +42,8 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     setIsEditing(false);
   };
   
+// Determines if a block is connected to another block in a given direction
+
   const isConnected = (position, direction) => {
     const x = position.x;
     const y = position.y;
@@ -59,6 +61,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
         return false;
     }
   };
+// Determines the CSS classes for the block based on its type and connections
 
   const connectionClasses = {
     input: `${isConnected(block.position, "left") ? "connected-left" : ""} ${
@@ -83,10 +86,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     }`,
   };
 
-  const gridRowEnd =
-    block.type.toLowerCase() === "function"
-      ? block.position.y + 3
-      : block.position.y + 2;
+// Renders the block with drag-and-drop functionality, editing capabilities, and connection indicators
 
   return (
     <div
@@ -94,11 +94,6 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
       className={`canvas-block ${block.type.toLowerCase()} ${
         isDragging ? "dragging" : ""
       }`}
-      style={{
-        gridColumnStart: block.position.x + 1,
-        gridRowStart: block.position.y + 1,
-        gridRowEnd: gridRowEnd,
-      }}
     >
       <div className="block-header">
         <span className="block-name">{block.name}</span>

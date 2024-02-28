@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import { CanvasProvider } from './context/CanvasContext';
 import { useLocation } from 'react-router-dom';
 
+// Disables options dropdown unless user is on canvas page
 const HeaderWithLocation = () => {
   const location = useLocation();
   const showOptions = location.pathname === '/canvas';

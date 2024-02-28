@@ -19,7 +19,7 @@ export const CanvasProvider = ({ children }) => {
     const [canvasData, setCanvasData] = useState(initialGrid);
 
     useEffect(() => {
-        console.log("Canvas Data updated:", JSON.stringify(canvasData));
+        console.log("Canvas Data updated:", canvasData);
     }, [canvasData]);
 
     const updateBlockContent = (blockId, newValue) => {
@@ -45,28 +45,24 @@ export const CanvasProvider = ({ children }) => {
             let newBlocks = [...prevCanvasData.blocks];
     
             if (newY >= maxRows || newX >= maxColumns || newY < 0 || newX < 0) {
-                console.log("New position is out of grid bounds.");
                 return prevCanvasData; 
             }
-
-
-            console.log(`Target cell state before move: ${newGrid[newY][newX]}`);
-    
+            // Prevents blocks from being moved to an occupied cell
             if (newGrid[newY][newX] !== null) {
-                console.log("Target position is already occupied.");
                 return prevCanvasData;
             }
     
             const blockIndex = newBlocks.findIndex(block => block.id === itemId);
             if (blockIndex !== -1) {
                 const block = newBlocks[blockIndex];
+                // Clears the old grid position
                 if (block.position.x != null && block.position.y != null) {
                     newGrid[block.position.y][block.position.x] = null;
                 }
+                // Updates the grid with block ID and updates block position
                 newGrid[newY][newX] = itemId;
                 newBlocks[blockIndex] = { ...block, position: { x: newX, y: newY } };
     
-                console.log(`Moved block ${itemId} to [${newX}, ${newY}]`);
             } else {
                 console.log(`Block ${itemId} not found.`);
             }
@@ -84,12 +80,13 @@ export const CanvasProvider = ({ children }) => {
         }
     };
 
-    const loadCanvas = (data) => {
-        console.log("Loading canvas data:", JSON.stringify(data.blocks));
-    
+    const loadCanvas = (data) => {    
         let gridExists = data.grid && Array.isArray(data.grid) && data.grid.length > 0;
         let newGrid;
     
+        // Canvases created before the grid was implemented will not have a grid property
+        // This checks if the grid exists and creates a new grid if it doesn't
+
         if (gridExists) {
             newGrid = data.grid; 
         } else {

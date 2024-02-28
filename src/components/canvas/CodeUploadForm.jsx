@@ -4,16 +4,14 @@ import { useCanvas } from '../../context/CanvasContext';
 import { useNavigate } from 'react-router-dom';
 import './CodeUploadForm.css';
 
+// Form for uploading new code to create a new canvas, pre-populated with Hello World and Two Sums examples
+
 const CodeUploadForm = () => {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const { loadCanvas } = useCanvas();
   const navigate = useNavigate();
 
-
-
-
-  
   const helloWorldCode = `
 def hello():
     print('Hello, World!')

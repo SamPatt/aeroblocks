@@ -3,6 +3,8 @@ import { useDrop } from 'react-dnd';
 import { useCanvas } from '../../context/CanvasContext';
 import CanvasBlock from './CanvasBlock';
 
+// Grid cells for the canvas area
+
 const GridCell = ({ x, y }) => {
     const { canvasData, updateBlockPosition } = useCanvas();
     const [, drop] = useDrop({

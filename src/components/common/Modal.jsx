@@ -1,6 +1,8 @@
 import React from 'react';
 import './Modal.css';
 
+// UI for saving the canvas
+
 const Modal = ({ onClose, title, children }) => {
   return (
     <div className="modal-backdrop" onClick={onClose}>

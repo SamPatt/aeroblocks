@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCanvas } from '../../context/CanvasContext';
 import Modal from './Modal';
 
+// Header component with options dropdown
+
 const Header = ({ showOptions }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -18,16 +20,6 @@ const Header = ({ showOptions }) => {
     setCanvasName(canvasData.name);
   }, [canvasData.name]);
 
-  const onLoadCanvas = () => {
-    setCanvasData({});
-    navigate('/canvas-selection');
-  }
-
-  const onNewCanvas = () => {
-    setCanvasData({});
-    navigate('/code-upload');
-  }
-
   const handleSave = (name) => {
     saveCanvas(name, canvasData);
     setShowSaveModal(false);
@@ -40,12 +32,14 @@ const Header = ({ showOptions }) => {
 
   const handleLoadCanvas = () => {
     setShowDropdown(false);
-    onLoadCanvas();
+    setCanvasData({});
+    navigate('/canvas-selection');
   };
 
   const handleNewCanvas = () => {
     setShowDropdown(false);
-    onNewCanvas();
+    setCanvasData({});
+    navigate('/code-upload');
   };
 
   const handleLogOut = () => {
