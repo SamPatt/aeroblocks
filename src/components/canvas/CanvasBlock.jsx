@@ -3,13 +3,6 @@ import { useDrag } from "react-dnd";
 import { useCanvas } from "../../context/CanvasContext";
 import "./CanvasBlock.css";
 
-const blockTypeColors = {
-  function: "#ff7f00",
-  input: "#2d572c",
-  output: "#0057b8",
-  variable: "#a349a4",
-};
-
 const CanvasBlock = ({ block, onMoveBlock, grid }) => {
   const { updateBlockContent } = useCanvas();
   const [isEditing, setIsEditing] = useState(false);
@@ -49,9 +42,6 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
     setIsEditing(false);
   };
   
-
-  const headerColor = blockTypeColors[block.type.toLowerCase()] || "grey";
-
   const isConnected = (position, direction) => {
     const x = position.x;
     const y = position.y;
@@ -110,7 +100,7 @@ const CanvasBlock = ({ block, onMoveBlock, grid }) => {
         gridRowEnd: gridRowEnd,
       }}
     >
-      <div className="block-header" style={{ backgroundColor: headerColor }}>
+      <div className="block-header">
         <span className="block-name">{block.name}</span>
         <span className="block-type">{block.type}</span>
       </div>
