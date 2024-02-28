@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { canvasService } from '../../services/canvasService';
 import { useCanvas } from '../../context/CanvasContext'; 
 import { useNavigate } from 'react-router-dom';
+import './CodeUploadForm.css';
 
 const CodeUploadForm = () => {
   const [code, setCode] = useState('');
@@ -44,31 +45,34 @@ const handleSubmit = async (event) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Create New Canvas</h2> 
-      <label>
-        Name:
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Canvas Name"
+    
+    <div className='upload-container'>
+      <form onSubmit={handleSubmit}>
+        <h2>Create New Canvas</h2> 
+        <label>
+          Name:
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Canvas Name"
+            required
+          />
+        </label>
+        <textarea
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Paste your code here"
+          rows="15"
+          cols="50"
           required
         />
-      </label>
-      <textarea
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        placeholder="Paste your code here"
-        rows="15"
-        cols="50"
-        required
-      />
-      <br />
-      <button type="button" onClick={() => { setCode(helloWorldCode); setName('Hello World'); }}>Hello World</button>
-      <button type="button" onClick={() => { setCode(twoSumsCode); setName('Two Sums'); }}>Two Sums</button>
-      <button type="submit">Create</button>
-    </form>
+        <br />
+        <button type="button" onClick={() => { setCode(helloWorldCode); setName('Hello World'); }}>Hello World</button>
+        <button type="button" onClick={() => { setCode(twoSumsCode); setName('Two Sums'); }}>Two Sums</button>
+        <button type="submit">Create</button>
+      </form>
+    </div>
   );
 };
 

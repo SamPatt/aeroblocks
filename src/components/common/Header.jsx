@@ -3,7 +3,7 @@ import './Header.css';
 import orbImage from '../../assets/orb.png';
 import { useNavigate } from 'react-router-dom';
 import { useCanvas } from '../../context/CanvasContext';
-import Modal from './Modal'; // Assuming you have a Modal component
+import Modal from './Modal';
 
 const Header = ({ showOptions }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -18,14 +18,6 @@ const Header = ({ showOptions }) => {
     setCanvasName(canvasData.name);
   }, [canvasData.name]);
 
-  const promptSave = (callback) => {
-    const confirmSave = window.confirm('Do you want to save the current canvas before proceeding?');
-    if (confirmSave) {
-      setShowSaveModal(true);
-    } else {
-      callback();
-    }
-  };
   const onLoadCanvas = () => {
     setCanvasData({});
     navigate('/canvas-selection');
@@ -48,20 +40,18 @@ const Header = ({ showOptions }) => {
 
   const handleLoadCanvas = () => {
     setShowDropdown(false);
-    promptSave(onLoadCanvas);
+    onLoadCanvas();
   };
 
   const handleNewCanvas = () => {
     setShowDropdown(false);
-    promptSave(onNewCanvas);
+    onNewCanvas();
   };
 
   const handleLogOut = () => {
     setShowDropdown(false);
-    promptSave(() => {
-      localStorage.removeItem('authToken');
-      navigate('/');
-    });
+    localStorage.removeItem('authToken');
+    navigate('/');
   };
 
   return (
